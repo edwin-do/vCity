@@ -79,7 +79,26 @@
                 {title: libraries.features[i].properties.NAME}
               ));
           }
-        }        
+        } 
+        
+        else if (type.includes("waterfalls"))
+        {
+          // loop through the array of libraries in the libraries.js data
+          for (i = 0; i < waterfalls.features.length; i++) 
+          {
+            // add a pushpin to the map for each library
+            map.entities.push(
+              new Microsoft.Maps.Pushpin(
+                new Microsoft.Maps.Location(
+                  // use the latitude & longitude data for the pushpin position
+                  waterfalls.features[i].properties.LATITUDE,
+                  waterfalls.features[i].properties.LONGITUDE
+                ),
+                // use the library name for the label 
+                {title: waterfalls.features[i].properties.NAME}
+              ));
+          }
+        }
       },
 
       // If "clear map" is uttered all pushpins are removed from the map
