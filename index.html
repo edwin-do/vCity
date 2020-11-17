@@ -3,13 +3,21 @@
 <head>
   <title>vCity | Hamilton </title>
   <link rel="stylesheet" href="css/bootstrap.min.css">
-  <style>p { font-size: 24px; }</style>
+  <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
   <div class="container">
-      <div id="myMap" style="width:700px;height:700px;float:left;"></div>
-      <div style="width:400px;float:left;padding: 0px 0px 0px 20px;">
+    <!-- map -->
+    <h1>vCity | Explore the city with your voice</h1>
+    <div class="row mt-5 mb-5">
+      <div class="col-12 text-center">
+        <div id="myMap"></div>
         <button id="start">Start</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+
         <p><strong>Script:</strong> try saying the below in sequence... <br/> <br />
           Information about McMaster University <br />
           Information about City Hall <br />
@@ -24,8 +32,13 @@
           Show libraries <br />
           Clear map <br />
           </p>
-        <p><strong>Information:</strong> <span id="output"></span></p>  
       </div>
+
+      <div class="col-6">
+        <p><strong>Information:</strong> <span id="output"></span></p> 
+      </div>
+
+    </div>
   </div>
 
   <!-- 
