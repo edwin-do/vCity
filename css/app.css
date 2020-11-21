@@ -1,5 +1,10 @@
+body{
+    background-color: #292C37;
+    color: #FCFAFA;
+}
 
 #myMap{
+    position: relative;
     height: 50vh;
     width: 100%;
 }
