@@ -12,6 +12,26 @@
 
   var topic = "";
 
+  // number of results (default)
+  var limit = 7;
+  var showMoreLimit = 10;
+
+  var titles = [];
+
+  function getTitles(){
+    for(i=0; i < limit; i++){
+      var id = "title" + i.toString();
+      document.getElementById(id).textContent = (i+1).toString() + ". " + titles[i];
+    }
+  }
+  
+  function getMoreTitles(){
+    for(i=limit; i < showMoreLimit; i++){
+      var id = "title" + i.toString();
+      document.getElementById(id).textContent = (i+1).toString() + ". " + titles[i];
+    }
+  }
+
   function clear(){
     for (i = map.entities.getLength() - 1; i >= 0; i--) {
       var pushpin = map.entities.get(i);
@@ -57,12 +77,11 @@
 
       "show more":
       function(){
-        console.log(topic);
-
         if (topic.includes("popular")){
-          for (i = 10; i < popular.features.length; i++) 
+          for (i = limit; i < showMoreLimit; i++) 
           {
             // add a pushpin to the map for each firestation
+            titles.push(popular.features[i].properties.TITLE);
             map.entities.push(
               new Microsoft.Maps.Pushpin(
                 new Microsoft.Maps.Location(
@@ -71,9 +90,10 @@
                   popular.features[i].properties.LONGITUDE
                 ),
                 // use the firestation name for the label 
-                {title: popular.features[i].properties.TITLE}
+                {title: (i+1).toString()}
               ));
-          } 
+          }
+          getMoreTitles(); 
         }
 
         else if(topic.includes("art")){
@@ -134,8 +154,10 @@
       function(){
         clear();
         topic = "popular";
-        for (i = 0; i < 10; i++) 
+        titles = []
+        for (i = 0; i < limit; i++) 
           {
+            titles.push(popular.features[i].properties.TITLE);
             // add a pushpin to the map for each firestation
             map.entities.push(
               new Microsoft.Maps.Pushpin(
@@ -145,9 +167,10 @@
                   popular.features[i].properties.LONGITUDE
                 ),
                 // use the firestation name for the label 
-                {title: popular.features[i].properties.TITLE}
+                {title: (i+1).toString()}
               ));
           } 
+        getTitles();
       },
 
       "show *type": 
@@ -159,7 +182,7 @@
         if (type.includes("art"))
         {
           // loop through the array of firestations in the firestations.js data
-          for (i = 0; i < 10; i++) 
+          for (i = 0; i < limit; i++) 
           {
             // add a pushpin to the map for each firestation
             map.entities.push(
@@ -179,7 +202,7 @@
         {
           topic = "libraries";
           // loop through the array of libraries in the libraries.js data
-          for (i = 0; i < 10; i++) 
+          for (i = 0; i < limit; i++) 
           {
             // add a pushpin to the map for each library
             map.entities.push(
@@ -199,7 +222,7 @@
         {
           topic ="waterfalls";
           // loop through the array of libraries in the libraries.js data
-          for (i = 0; i < 10; i++) 
+          for (i = 0; i < limit; i++) 
           {
             // add a pushpin to the map for each library
             map.entities.push(
