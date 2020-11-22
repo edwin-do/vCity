@@ -1,4 +1,4 @@
-var topPlaces ={
+var fun ={
     "type": "FeatureCollection",
     "name": "Tourism_Points_of_Interest",
     "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },

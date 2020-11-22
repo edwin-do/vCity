@@ -10,6 +10,17 @@
     synth.speak(utterThis);
   }
 
+  var topic ="";
+
+  function clear(){
+    for (i = map.entities.getLength() - 1; i >= 0; i--) {
+      var pushpin = map.entities.get(i);
+      if (pushpin instanceof Microsoft.Maps.Pushpin) {
+        map.entities.removeAt(i);
+      }
+    }
+  }
+
   if (annyang) {
 
     // Commands are defined as keys and values in an object, the key is the 
@@ -39,25 +50,66 @@
       // You could use a tool like this to help you visualize the data:
       //    http://jsonviewer.stack.hu/
       //
-      "show *type": 
-      function(type)
-      {
-        // if type includes "fire" we assume the user wants to see firestations
-        if (type.includes("fire"))
-        {
-          // loop through the array of firestations in the firestations.js data
-          for (i = 0; i < firestations.features.length; i++) 
+      "show more":
+      function(){
+        if (topic = "popular"){
+          for (i = 10; i < popular.features.length; i++) 
           {
             // add a pushpin to the map for each firestation
             map.entities.push(
               new Microsoft.Maps.Pushpin(
                 new Microsoft.Maps.Location(
                   // use the latitude & longitude data for the pushpin position
-                  firestations.features[i].properties.LATITUDE,
-                  firestations.features[i].properties.LONGITUDE
+                  popular.features[i].properties.LATITUDE,
+                  popular.features[i].properties.LONGITUDE
                 ),
                 // use the firestation name for the label 
-                {title: firestations.features[i].properties.NAME}
+                {title: popular.features[i].properties.TITLE}
+              ));
+          } 
+        }
+      },
+
+      "popular *places":
+      function(){
+        clear();
+        topic = "popular";
+        for (i = 0; i < 10; i++) 
+          {
+            // add a pushpin to the map for each firestation
+            map.entities.push(
+              new Microsoft.Maps.Pushpin(
+                new Microsoft.Maps.Location(
+                  // use the latitude & longitude data for the pushpin position
+                  popular.features[i].properties.LATITUDE,
+                  popular.features[i].properties.LONGITUDE
+                ),
+                // use the firestation name for the label 
+                {title: popular.features[i].properties.TITLE}
+              ));
+          } 
+      },
+
+      "show *type": 
+      function(type)
+      {
+        clear();
+        // if type includes "fire" we assume the user wants to see firestations
+        if (type.includes("art"))
+        {
+          // loop through the array of firestations in the firestations.js data
+          for (i = 0; i < art.features.length; i++) 
+          {
+            // add a pushpin to the map for each firestation
+            map.entities.push(
+              new Microsoft.Maps.Pushpin(
+                new Microsoft.Maps.Location(
+                  // use the latitude & longitude data for the pushpin position
+                  art.features[i].properties.LATITUDE,
+                  art.features[i].properties.LONGITUDE
+                ),
+                // use the firestation name for the label 
+                {title: art.features[i].properties.NAME}
               ));
           }
         }
@@ -67,6 +119,7 @@
           // loop through the array of libraries in the libraries.js data
           for (i = 0; i < libraries.features.length; i++) 
           {
+            console.log(libraries.features[i].properties.LATITUDE);
             // add a pushpin to the map for each library
             map.entities.push(
               new Microsoft.Maps.Pushpin(
