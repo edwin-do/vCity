@@ -10,7 +10,7 @@
     synth.speak(utterThis);
   }
 
-  var topic ="";
+  var topic = "";
 
   function clear(){
     for (i = map.entities.getLength() - 1; i >= 0; i--) {
@@ -50,9 +50,16 @@
       // You could use a tool like this to help you visualize the data:
       //    http://jsonviewer.stack.hu/
       //
+      "reset":
+      function(){
+        loadmap();
+      },
+
       "show more":
       function(){
-        if (topic = "popular"){
+        console.log(topic);
+
+        if (topic.includes("popular")){
           for (i = 10; i < popular.features.length; i++) 
           {
             // add a pushpin to the map for each firestation
@@ -68,6 +75,59 @@
               ));
           } 
         }
+
+        else if(topic.includes("art")){
+          for (i = 10; i < art.features.length; i++) 
+          {
+            // add a pushpin to the map for each firestation
+            map.entities.push(
+              new Microsoft.Maps.Pushpin(
+                new Microsoft.Maps.Location(
+                  // use the latitude & longitude data for the pushpin position
+                  art.features[i].properties.LATITUDE,
+                  art.features[i].properties.LONGITUDE
+                ),
+                // use the firestation name for the label 
+                {title: art.features[i].properties.NAME}
+              ));
+          }
+        }
+
+        else if( topic.includes("libraries")){
+            // loop through the array of libraries in the libraries.js data
+            for (i = 10; i < libraries.features.length; i++) 
+            {
+              // add a pushpin to the map for each library
+              map.entities.push(
+                new Microsoft.Maps.Pushpin(
+                  new Microsoft.Maps.Location(
+                    // use the latitude & longitude data for the pushpin position
+                    libraries.features[i].properties.LATITUDE,
+                    libraries.features[i].properties.LONGITUDE
+                  ),
+                  // use the library name for the label 
+                  {title: libraries.features[i].properties.NAME}
+                ));
+            }
+        }
+
+        else if( topic.includes("waterfalls")){
+          // loop through the array of libraries in the libraries.js data
+          for (i = 10; i < waterfalls.features.length; i++) 
+          {
+            // add a pushpin to the map for each library
+            map.entities.push(
+              new Microsoft.Maps.Pushpin(
+                new Microsoft.Maps.Location(
+                  // use the latitude & longitude data for the pushpin position
+                  waterfalls.features[i].properties.LATITUDE,
+                  waterfalls.features[i].properties.LONGITUDE
+                ),
+                // use the library name for the label 
+                {title: waterfalls.features[i].properties.NAME}
+              ));
+          }
+      }
       },
 
       "popular *places":
@@ -94,11 +154,12 @@
       function(type)
       {
         clear();
+        topic = "art";
         // if type includes "fire" we assume the user wants to see firestations
         if (type.includes("art"))
         {
           // loop through the array of firestations in the firestations.js data
-          for (i = 0; i < art.features.length; i++) 
+          for (i = 0; i < 10; i++) 
           {
             // add a pushpin to the map for each firestation
             map.entities.push(
@@ -116,10 +177,10 @@
         // if type includes "libraries" we assume user wants to see libraries
         else if (type.includes("libraries"))
         {
+          topic = "libraries";
           // loop through the array of libraries in the libraries.js data
-          for (i = 0; i < libraries.features.length; i++) 
+          for (i = 0; i < 10; i++) 
           {
-            console.log(libraries.features[i].properties.LATITUDE);
             // add a pushpin to the map for each library
             map.entities.push(
               new Microsoft.Maps.Pushpin(
@@ -136,8 +197,9 @@
         
         else if (type.includes("waterfalls"))
         {
+          topic ="waterfalls";
           // loop through the array of libraries in the libraries.js data
-          for (i = 0; i < waterfalls.features.length; i++) 
+          for (i = 0; i < 10; i++) 
           {
             // add a pushpin to the map for each library
             map.entities.push(
