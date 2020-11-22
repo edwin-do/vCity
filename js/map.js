@@ -21,7 +21,6 @@
 
   document.getElementById("details").onclick = function()
   {
-    console.log(synth.speaking);
     if (synth.speaking){
       synth.cancel();
       document.getElementById("details").textContent = "Read details";
