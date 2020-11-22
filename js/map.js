@@ -23,6 +23,11 @@
       var id = "title" + i.toString();
       document.getElementById(id).textContent = (i+1).toString() + ". " + titles[i];
     }
+
+    for(i=limit; i < showMoreLimit; i++){
+      var id = "title" + i.toString();
+      document.getElementById(id).textContent = "";
+    }
   }
   
   function getMoreTitles(){
@@ -33,6 +38,7 @@
   }
 
   function clear(){
+    titles = [];
     for (i = map.entities.getLength() - 1; i >= 0; i--) {
       var pushpin = map.entities.get(i);
       if (pushpin instanceof Microsoft.Maps.Pushpin) {
@@ -97,9 +103,10 @@
         }
 
         else if(topic.includes("art")){
-          for (i = 10; i < art.features.length; i++) 
+          for (i = limit; i < showMoreLimit; i++) 
           {
             // add a pushpin to the map for each firestation
+            titles.push(art.features[i].properties.NAME);
             map.entities.push(
               new Microsoft.Maps.Pushpin(
                 new Microsoft.Maps.Location(
@@ -108,9 +115,10 @@
                   art.features[i].properties.LONGITUDE
                 ),
                 // use the firestation name for the label 
-                {title: art.features[i].properties.NAME}
+                {title: (i+1).toString()}
               ));
           }
+          getMoreTitles(); 
         }
 
         else if( topic.includes("libraries")){
@@ -154,7 +162,6 @@
       function(){
         clear();
         topic = "popular";
-        titles = []
         for (i = 0; i < limit; i++) 
           {
             titles.push(popular.features[i].properties.TITLE);
@@ -177,13 +184,15 @@
       function(type)
       {
         clear();
-        topic = "art";
+        console.log(titles);
         // if type includes "fire" we assume the user wants to see firestations
         if (type.includes("art"))
         {
+          topic = "art";
           // loop through the array of firestations in the firestations.js data
           for (i = 0; i < limit; i++) 
           {
+            titles.push(art.features[i].properties.NAME);
             // add a pushpin to the map for each firestation
             map.entities.push(
               new Microsoft.Maps.Pushpin(
@@ -193,9 +202,10 @@
                   art.features[i].properties.LONGITUDE
                 ),
                 // use the firestation name for the label 
-                {title: art.features[i].properties.NAME}
+                {title: (i+1).toString()}
               ));
           }
+          getTitles();
         }
         // if type includes "libraries" we assume user wants to see libraries
         else if (type.includes("libraries"))
