@@ -60,11 +60,13 @@
   function home(){
     document.getElementById("message").style.display = "block";
     document.getElementById("results").style.display = "none";
+    document.getElementById("showDetails").style.display = "none";
   }
 
   function getTitles(){
     document.getElementById("message").style.display = "none";
     document.getElementById("results").style.display = "block";
+    document.getElementById("showDetails").style.display = "block";
     document.getElementById("topic").textContent = topic.toLocaleUpperCase();
     for(i=0; i < limit; i++){
       var id = "title" + i.toString();

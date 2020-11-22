@@ -12,3 +12,7 @@ hr{
     height: 90vh;
     width: 100%;
 }
+
+#showDetails{
+    display: none;
+}
