@@ -67,12 +67,12 @@
 
       // If "information about X" is uttered, we show on the page "Here is some
       // information about X".  
-      "information about *place" :
-      function(place) 
-      {
-        document.getElementById("output").innerHTML = 
-          "Here is some information about " + place;
-      },
+      // "information about *place" :
+      // function(place) 
+      // {
+      //   document.getElementById("output").innerHTML = 
+      //     "Here is some information about " + place;
+      // },
 
       "details about *num" :
       function(num){
