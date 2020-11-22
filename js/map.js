@@ -13,7 +13,7 @@
   document.getElementById("help").onclick = function()
   {
     var synth = window.speechSynthesis;
-    var utterText = "Try saying, reset, or, home, to reset your screen or position." ;
+    var utterText = "Try saying, reset, or, clear map, to reset your screen or position." ;
     var utterThis = new SpeechSynthesisUtterance(utterText);
     utterThis.pitch = 1.5;
     utterThis.rate = 1.2;
@@ -69,6 +69,7 @@
   function clear(){
     titles = [];
     details = [];
+    document.getElementById("output").innerHTML = "";
     for (i = map.entities.getLength() - 1; i >= 0; i--) {
       var pushpin = map.entities.get(i);
       if (pushpin instanceof Microsoft.Maps.Pushpin) {
@@ -236,6 +237,7 @@
       function(type)
       {
         clear();
+        loadmap();
         // if type includes "fire" we assume the user wants to see firestations
         if (type.includes("art"))
         {
