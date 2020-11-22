@@ -143,9 +143,10 @@
 
         else if( topic.includes("waterfalls")){
           // loop through the array of libraries in the libraries.js data
-          for (i = 10; i < waterfalls.features.length; i++) 
+          for (i = limit; i < showMoreLimit; i++) 
           {
             // add a pushpin to the map for each library
+            titles.push(waterfalls.features[i].properties.NAME);
             map.entities.push(
               new Microsoft.Maps.Pushpin(
                 new Microsoft.Maps.Location(
@@ -154,9 +155,10 @@
                   waterfalls.features[i].properties.LONGITUDE
                 ),
                 // use the library name for the label 
-                {title: waterfalls.features[i].properties.NAME}
+                {title: (i+1).toString()}
               ));
           }
+          getMoreTitles(); 
       }
       },
 
@@ -237,6 +239,7 @@
           // loop through the array of libraries in the libraries.js data
           for (i = 0; i < limit; i++) 
           {
+            titles.push(waterfalls.features[i].properties.NAME);
             // add a pushpin to the map for each library
             map.entities.push(
               new Microsoft.Maps.Pushpin(
@@ -246,9 +249,10 @@
                   waterfalls.features[i].properties.LONGITUDE
                 ),
                 // use the library name for the label 
-                {title: waterfalls.features[i].properties.NAME}
+                {title: (i+1).toString()}
               ));
           }
+          getTitles();
         }
       },
 
