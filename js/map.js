@@ -123,9 +123,10 @@
 
         else if( topic.includes("libraries")){
             // loop through the array of libraries in the libraries.js data
-            for (i = 10; i < libraries.features.length; i++) 
+            for (i = limit; i < showMoreLimit; i++) 
             {
               // add a pushpin to the map for each library
+              titles.push(libraries.features[i].properties.NAME);
               map.entities.push(
                 new Microsoft.Maps.Pushpin(
                   new Microsoft.Maps.Location(
@@ -134,9 +135,10 @@
                     libraries.features[i].properties.LONGITUDE
                   ),
                   // use the library name for the label 
-                  {title: libraries.features[i].properties.NAME}
+                  {title: (i+1).toString()}
                 ));
             }
+            getMoreTitles(); 
         }
 
         else if( topic.includes("waterfalls")){
@@ -184,7 +186,6 @@
       function(type)
       {
         clear();
-        console.log(titles);
         // if type includes "fire" we assume the user wants to see firestations
         if (type.includes("art"))
         {
@@ -214,6 +215,7 @@
           // loop through the array of libraries in the libraries.js data
           for (i = 0; i < limit; i++) 
           {
+            titles.push(libraries.features[i].properties.NAME);
             // add a pushpin to the map for each library
             map.entities.push(
               new Microsoft.Maps.Pushpin(
@@ -223,9 +225,10 @@
                   libraries.features[i].properties.LONGITUDE
                 ),
                 // use the library name for the label 
-                {title: libraries.features[i].properties.NAME}
+                {title: (i+1).toString()}
               ));
           }
+          getTitles();
         } 
         
         else if (type.includes("waterfalls"))
