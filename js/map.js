@@ -2,7 +2,6 @@
   // Welcome the user after they click the start button
   document.getElementById("start").onclick = function()
   {
-    var synth = window.speechSynthesis;
     var utterText = "Welcome to vCity! Try saying Popular places, or show me waterfalls" ;
     var utterThis = new SpeechSynthesisUtterance(utterText);
     utterThis.pitch = 1.5;
@@ -12,7 +11,6 @@
 
   document.getElementById("help").onclick = function()
   {
-    var synth = window.speechSynthesis;
     var utterText = "Try saying, reset, or, clear map, to reset your screen or position." ;
     var utterThis = new SpeechSynthesisUtterance(utterText);
     utterThis.pitch = 1.5;
@@ -20,6 +18,34 @@
     synth.speak(utterThis);
     home();
   }
+
+  document.getElementById("details").onclick = function()
+  {
+    console.log(synth.speaking);
+    if (synth.speaking){
+      synth.cancel();
+      document.getElementById("details").textContent = "Read details";
+    }
+    else{
+      var utterText = info;
+      var utterThis = new SpeechSynthesisUtterance(utterText);
+
+      utterThis.pitch = 1.5;
+      utterThis.rate = 1.2;
+      synth.speak(utterThis);
+      if (synth.speaking){
+        document.getElementById("details").textContent = "STOP";
+      }
+
+      // listens for when it is done reading
+      utterThis.addEventListener('end', function(event){
+        document.getElementById("details").textContent = "Read details";
+      });
+    }
+  }
+
+  // var read = false;
+  var synth = window.speechSynthesis;
 
   var topic = "";
 
@@ -29,15 +55,7 @@
 
   var titles = [];
   var details = [];
-
-  // function read(text){
-  //   var synth = window.speechSynthesis;
-  //   var utterText = text;
-  //   var utterThis = new SpeechSynthesisUtterance(utterText);
-  //   utterThis.pitch = 1.5;
-  //   utterThis.rate = 1.2;
-  //   synth.speak(utterThis);
-  // }
+  var info ="";
 
   function home(){
     document.getElementById("message").style.display = "block";
@@ -101,7 +119,7 @@
 
       "details about *num" :
       function(num){
-        var info = titles[num-1] + " - " + details[num-1];
+        info = titles[num-1] + " - " + details[num-1];
         document.getElementById("output").innerHTML = info;
       },
 
