@@ -3,10 +3,10 @@
   document.getElementById("start").onclick = function()
   {
     var synth = window.speechSynthesis;
-    var utterText = "Welcome to Hamilton!";
+    var utterText = "Welcome to Hamilton! Try saying Popular places" ;
     var utterThis = new SpeechSynthesisUtterance(utterText);
-    utterThis.pitch = 1.0;
-    utterThis.rate = 0.9;
+    utterThis.pitch = 1.5;
+    utterThis.rate = 1.2;
     synth.speak(utterThis);
   }
 
@@ -17,6 +17,16 @@
   var showMoreLimit = 10;
 
   var titles = [];
+  var details = [];
+
+  // function read(text){
+  //   var synth = window.speechSynthesis;
+  //   var utterText = text;
+  //   var utterThis = new SpeechSynthesisUtterance(utterText);
+  //   utterThis.pitch = 1.5;
+  //   utterThis.rate = 1.2;
+  //   synth.speak(utterThis);
+  // }
 
   function getTitles(){
     for(i=0; i < limit; i++){
@@ -39,6 +49,7 @@
 
   function clear(){
     titles = [];
+    details = [];
     for (i = map.entities.getLength() - 1; i >= 0; i--) {
       var pushpin = map.entities.get(i);
       if (pushpin instanceof Microsoft.Maps.Pushpin) {
@@ -63,6 +74,12 @@
           "Here is some information about " + place;
       },
 
+      "details about *num" :
+      function(num){
+        var info = titles[num-1] + " - " + details[num-1];
+        document.getElementById("output").innerHTML = info;
+      },
+
       // If "show firestations" or "show libraries" are uttered, the map will 
       // be populated with pushpins for firestations or libraries
       //
@@ -78,6 +95,7 @@
       //
       "reset":
       function(){
+        clear();
         loadmap();
       },
 
@@ -88,6 +106,7 @@
           {
             // add a pushpin to the map for each firestation
             titles.push(popular.features[i].properties.TITLE);
+            details.push(popular.features[i].properties.DESCRIPTION);
             map.entities.push(
               new Microsoft.Maps.Pushpin(
                 new Microsoft.Maps.Location(
@@ -107,6 +126,7 @@
           {
             // add a pushpin to the map for each firestation
             titles.push(art.features[i].properties.NAME);
+            details.push(art.features[i].properties.ADDRESS);
             map.entities.push(
               new Microsoft.Maps.Pushpin(
                 new Microsoft.Maps.Location(
@@ -127,6 +147,7 @@
             {
               // add a pushpin to the map for each library
               titles.push(libraries.features[i].properties.NAME);
+              details.push(libraries.features[i].properties.ADDRESS);
               map.entities.push(
                 new Microsoft.Maps.Pushpin(
                   new Microsoft.Maps.Location(
@@ -147,6 +168,7 @@
           {
             // add a pushpin to the map for each library
             titles.push(waterfalls.features[i].properties.NAME);
+            details.push(waterfalls.features[i].properties.ALTERNATE_NAME);
             map.entities.push(
               new Microsoft.Maps.Pushpin(
                 new Microsoft.Maps.Location(
@@ -169,6 +191,7 @@
         for (i = 0; i < limit; i++) 
           {
             titles.push(popular.features[i].properties.TITLE);
+            details.push(popular.features[i].properties.DESCRIPTION);
             // add a pushpin to the map for each firestation
             map.entities.push(
               new Microsoft.Maps.Pushpin(
@@ -196,6 +219,7 @@
           for (i = 0; i < limit; i++) 
           {
             titles.push(art.features[i].properties.NAME);
+            details.push(art.features[i].properties.ADDRESS);
             // add a pushpin to the map for each firestation
             map.entities.push(
               new Microsoft.Maps.Pushpin(
@@ -218,6 +242,7 @@
           for (i = 0; i < limit; i++) 
           {
             titles.push(libraries.features[i].properties.NAME);
+            details.push(libraries.features[i].properties.ADDRESS);
             // add a pushpin to the map for each library
             map.entities.push(
               new Microsoft.Maps.Pushpin(
@@ -240,6 +265,7 @@
           for (i = 0; i < limit; i++) 
           {
             titles.push(waterfalls.features[i].properties.NAME);
+            details.push(waterfalls.features[i].properties.ALTERNATE_NAME);
             // add a pushpin to the map for each library
             map.entities.push(
               new Microsoft.Maps.Pushpin(
