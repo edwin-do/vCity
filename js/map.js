@@ -3,11 +3,22 @@
   document.getElementById("start").onclick = function()
   {
     var synth = window.speechSynthesis;
-    var utterText = "Welcome to Hamilton! Try saying Popular places" ;
+    var utterText = "Welcome to vCity! Try saying Popular places, or show me waterfalls" ;
     var utterThis = new SpeechSynthesisUtterance(utterText);
     utterThis.pitch = 1.5;
     utterThis.rate = 1.2;
     synth.speak(utterThis);
+  }
+
+  document.getElementById("help").onclick = function()
+  {
+    var synth = window.speechSynthesis;
+    var utterText = "Try saying, reset, or, home, to reset your screen or position." ;
+    var utterThis = new SpeechSynthesisUtterance(utterText);
+    utterThis.pitch = 1.5;
+    utterThis.rate = 1.2;
+    synth.speak(utterThis);
+    home();
   }
 
   var topic = "";
@@ -28,7 +39,15 @@
   //   synth.speak(utterThis);
   // }
 
+  function home(){
+    document.getElementById("message").style.display = "block";
+    document.getElementById("results").style.display = "none";
+  }
+
   function getTitles(){
+    document.getElementById("message").style.display = "none";
+    document.getElementById("results").style.display = "block";
+    document.getElementById("topic").textContent = topic.toLocaleUpperCase();
     for(i=0; i < limit; i++){
       var id = "title" + i.toString();
       document.getElementById(id).textContent = (i+1).toString() + ". " + titles[i];
@@ -74,6 +93,11 @@
       //     "Here is some information about " + place;
       // },
 
+      "home":
+      function(){
+        home();
+      },
+
       "details about *num" :
       function(num){
         var info = titles[num-1] + " - " + details[num-1];
@@ -97,6 +121,7 @@
       function(){
         clear();
         loadmap();
+        home();
       },
 
       "show more":

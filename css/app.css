@@ -3,8 +3,12 @@ body{
     color: #FCFAFA;
 }
 
+hr{
+    background-color: white;
+}
+
 #myMap{
     position: relative;
-    height: 70vh;
+    height: 90vh;
     width: 100%;
 }
