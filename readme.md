@@ -18,7 +18,7 @@ npm install
 node server.js
 ```
 
-Open index.html at localhost:3000
+Open index.html at 
 http://localhost:3000/index.html
 
 ## Usage
